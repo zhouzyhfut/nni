@@ -385,25 +385,25 @@ def launch_experiment(args, experiment_config, mode, config_file_name, experimen
     '''follow steps to start rest server and start experiment'''
     nni_config = Config(config_file_name)
     # check packages for tuner
-    package_name, module_name = None, None
-    if experiment_config.get('tuner') and experiment_config['tuner'].get('builtinTunerName'):
-        package_name = experiment_config['tuner']['builtinTunerName']
-        module_name = ModuleName.get(package_name)
-    elif experiment_config.get('advisor') and experiment_config['advisor'].get('builtinAdvisorName'):
-        package_name = experiment_config['advisor']['builtinAdvisorName']
-        module_name = AdvisorModuleName.get(package_name)
-    if package_name and module_name:
-        try:
-            stdout_full_path, stderr_full_path = get_log_path(config_file_name)
-            with open(stdout_full_path, 'a+') as stdout_file, open(stderr_full_path, 'a+') as stderr_file:
-                check_call([sys.executable, '-c', 'import %s'%(module_name)], stdout=stdout_file, stderr=stderr_file)
-        except CalledProcessError:
-            print_error('some errors happen when import package %s.' %(package_name))
-            print_log_content(config_file_name)
-            if package_name in PACKAGE_REQUIREMENTS:
-                print_error('If %s is not installed, it should be installed through '\
-                            '\'nnictl package install --name %s\''%(package_name, package_name))
-            exit(1)
+    # package_name, module_name = None, None
+    # if experiment_config.get('tuner') and experiment_config['tuner'].get('builtinTunerName'):
+    #     package_name = experiment_config['tuner']['builtinTunerName']
+    #     module_name = ModuleName.get(package_name)
+    # elif experiment_config.get('advisor') and experiment_config['advisor'].get('builtinAdvisorName'):
+    #     package_name = experiment_config['advisor']['builtinAdvisorName']
+    #     module_name = AdvisorModuleName.get(package_name)
+    # if package_name and module_name:
+    #     try:
+    #         stdout_full_path, stderr_full_path = get_log_path(config_file_name)
+    #         with open(stdout_full_path, 'a+') as stdout_file, open(stderr_full_path, 'a+') as stderr_file:
+    #             check_call([sys.executable, '-c', 'import %s'%(module_name)], stdout=stdout_file, stderr=stderr_file)
+    #     except CalledProcessError:
+    #         print_error('some errors happen when import package %s.' %(package_name))
+    #         print_log_content(config_file_name)
+    #         if package_name in PACKAGE_REQUIREMENTS:
+    #             print_error('If %s is not installed, it should be installed through '\
+    #                         '\'nnictl package install --name %s\''%(package_name, package_name))
+    #         exit(1)
     log_dir = experiment_config['logDir'] if experiment_config.get('logDir') else None
     log_level = experiment_config['logLevel'] if experiment_config.get('logLevel') else None
     #view experiment mode do not need debug function, when view an experiment, there will be no new logs created

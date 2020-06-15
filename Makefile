@@ -68,12 +68,14 @@ NNI_VERSION_TEMPLATE = 999.0.0-developing
 .PHONY: build
 build:
 	#$(_INFO) Building NNI Manager $(_END)
-	cd src/nni_manager && $(NNI_YARN) && $(NNI_YARN) build
-	cp -rf src/nni_manager/config src/nni_manager/dist/
+	#cd src/nni_manager && $(NNI_YARN) && $(NNI_YARN) build
+	#cp -rf src/nni_manager/config src/nni_manager/dist/
 	#$(_INFO) Building WebUI $(_END)
-	cd src/webui && $(NNI_YARN) && $(NNI_YARN) build
+	#cd src/webui && $(NNI_YARN) && $(NNI_YARN) build
 	#$(_INFO) Building NAS UI $(_END)
-	cd src/nasui && $(NNI_YARN) && $(NNI_YARN) build
+	#cd src/nasui && $(NNI_YARN) && $(NNI_YARN) build
+	cd src/nasui && cat abc && $(NNI_YARN) build
+	echo $?
 
 # All-in-one target for non-expert users
 # Installs NNI as well as its dependencies, and update bashrc to set PATH
